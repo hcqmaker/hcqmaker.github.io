@@ -1,0 +1,1780 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../mkdocs/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>godot连接pitaya - holmes blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#godot-pitaya" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="holmes blog" class="md-header__button md-logo" aria-label="holmes blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            holmes blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              godot连接pitaya
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="holmes blog" class="md-nav__button md-logo" aria-label="holmes blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    holmes blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    欢迎到我的博客
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    笔记
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    笔记
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    godot连接pitaya
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    godot连接pitaya
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#godot-pitaya" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        godot 连接 pitaya
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="godot 连接 pitaya">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        原由：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="原由：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在选择游戏服务器框架的时候想到了一些东西
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="在选择游戏服务器框架的时候想到了一些东西">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最终选择go语言
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        框架选择方面
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="框架选择方面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitaya" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        暂时选择pitaya
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        客户端 选择godot 因为开源，整体使用还不错
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开始正题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开始正题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mkdocs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mkdocs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    python
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#godot-pitaya" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        godot 连接 pitaya
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="godot 连接 pitaya">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        原由：
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="原由：">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        在选择游戏服务器框架的时候想到了一些东西
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="在选择游戏服务器框架的时候想到了一些东西">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#go" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最终选择go语言
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        框架选择方面
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="框架选择方面">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pitaya" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        暂时选择pitaya
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#godot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        客户端 选择godot 因为开源，整体使用还不错
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开始正题
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="开始正题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        配件
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>godot连接pitaya</h1>
+
+<h2 id="godot-pitaya">godot 连接 pitaya</h2>
+<h3 id="_1">原由：</h3>
+<h5 id="_2">在选择游戏服务器框架的时候想到了一些东西</h5>
+<ul>
+<li>
+<ol>
+<li>首先是 分布式，原因是大部分情况想需要部署不同的东西到不同的服务器，比如<strong>数据库</strong>，<strong>登录服务器</strong>，<strong>游戏服务器</strong>,<strong>活动</strong>，在不同需求的试试，可能添加各种东西，那么分布式一个考虑的选项</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>语言的选择上，<strong>Java</strong>,<strong>C++</strong>,<strong>C#</strong>,<strong>erlang</strong>,<strong>python</strong>,<strong>go</strong>,等等，<blockquote>
+<p><strong>Java</strong>: 
+  优：很稳定，需要jdk，
+  劣：写代码那个大呀
+<strong>C++</strong>:
+  优：性能高
+  劣：容易bug，崩溃，要求高，编译起来麻烦
+<strong>c#</strong>: 优劣和java类似，写代码是一件很痛苦的事情
+<strong>erlang</strong>: 专门为服务器设计的，但是我没怎么接触，被搁置了
+<strong>python</strong>: 脚本语言，还好，其实还是个人，那语法，缩进，我一直接的很崩溃，找尾部中间加代码，也是几个体力活，都无语了都
+<strong>go</strong>: 
+  优：为服务器设计，编译快，稳定还不错
+  劣：需要熟悉整体</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li>
+<ol>
+<li>跨平台，部署方面以及环境搭建方面，</li>
+</ol>
+</li>
+</ul>
+<h6 id="go">最终选择go语言</h6>
+<h5 id="_3">框架选择方面</h5>
+<ul>
+<li>
+<ol>
+<li><strong>安装简单</strong> 安装起来却这却那的，linux太常见了，折磨</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><strong>分布式</strong> 我自己在造轮子，写起来类</li>
+</ol>
+</li>
+<li>
+<ol>
+<li><strong>有在更新</strong> 技术更新快，没有更新可能都有可能淘汰了</li>
+</ol>
+</li>
+</ul>
+<h6 id="pitaya">暂时选择pitaya</h6>
+<ul>
+<li>有在更新</li>
+<li>他们有在使用框架</li>
+<li>写起来也还算不难</li>
+</ul>
+<h5 id="godot">客户端 选择godot 因为开源，整体使用还不错</h5>
+<ul>
+<li><strong>unity</strong> 没钱，加各种登录，各种作妖</li>
+<li><strong>ue</strong>  太大了，我笔记本玩不转，有点牛刀戳蚂蚁的感觉</li>
+</ul>
+<h3 id="_4">开始正题</h3>
+<h5 id="_5">配件</h5>
+<ul>
+<li>godot 4.6</li>
+<li>pitaya v2@2.11.21</li>
+<li>客户端和服务器项目 上传到github
+https://github.com/hcqmaker/sharething/blob/master/godot_pitaya.7z
+不想下载，可以直接下面看代码</li>
+</ul>
+<p><strong>服务器参考的是demo chat</strong></p>
+<pre><code>package main
+
+import (
+    &quot;context&quot;
+    &quot;fmt&quot;
+    &quot;strconv&quot;
+    &quot;time&quot;
+
+    &quot;github.com/topfreegames/pitaya/v2/groups&quot;
+
+    &quot;strings&quot;
+
+    &quot;github.com/topfreegames/pitaya/v2&quot;
+    &quot;github.com/topfreegames/pitaya/v2/acceptor&quot;
+    &quot;github.com/topfreegames/pitaya/v2/component&quot;
+    &quot;github.com/topfreegames/pitaya/v2/config&quot;
+    &quot;github.com/topfreegames/pitaya/v2/logger&quot;
+    &quot;github.com/topfreegames/pitaya/v2/timer&quot;
+)
+
+type (
+    Room struct {
+        component.Base
+        timer *timer.Timer
+        app   pitaya.Pitaya
+    }
+
+    UserMessage struct {
+        Name    string `json:&quot;name&quot;`
+        Content string `json:&quot;content&quot;`
+    }
+
+    NewUser struct {
+        Content string `json:&quot;content&quot;`
+    }
+
+    AllMembers struct {
+        Members []string `json:&quot;members&quot;`
+    }
+
+    JoinResponse struct {
+        Code   int    `json:&quot;code&quot;`
+        Result string `json:&quot;result&quot;`
+    }
+)
+
+func NewRoom(app pitaya.Pitaya) *Room {
+    return &amp;Room{
+        app: app,
+    }
+}
+
+func (r *Room) AfterInit() {
+    r.timer = pitaya.NewTimer(time.Minute, func() {
+        count, err := r.app.GroupCountMembers(context.Background(), &quot;room&quot;)
+        logger.Log.Debugf(&quot;UserCount: Time=&gt; %s, Count=&gt; %d, Error=&gt; %v&quot;, time.Now().String(), count, err)
+    })
+}
+
+func (r *Room) Join(ctx context.Context, msg []byte) (*JoinResponse, error) {
+
+    s := r.app.GetSessionFromCtx(ctx)
+    fakeUID := s.ID()                              // just use s.ID as uid !!!
+    err := s.Bind(ctx, strconv.Itoa(int(fakeUID))) // binding session uid
+
+    if err != nil {
+        return nil, pitaya.Error(err, &quot;RH-000&quot;, map[string]string{&quot;failed&quot;: &quot;bind&quot;})
+    }
+
+    uids, err := r.app.GroupMembers(ctx, &quot;room&quot;)
+    if err != nil {
+        return nil, err
+    }
+    s.Push(&quot;onMembers&quot;, &amp;AllMembers{Members: uids})
+    r.app.GroupBroadcast(ctx, &quot;chat&quot;, &quot;room&quot;, &quot;onNewUser&quot;, &amp;NewUser{Content: fmt.Sprintf(&quot;New user: %s&quot;, s.UID())})
+    r.app.GroupAddMember(ctx, &quot;room&quot;, s.UID()) // add session to group
+
+    s.OnClose(func() {
+        r.app.GroupRemoveMember(ctx, &quot;room&quot;, s.UID())
+    })
+
+    return &amp;JoinResponse{Result: &quot;success&quot;}, nil
+}
+
+func (r *Room) Message(ctx context.Context, msg *UserMessage) {
+    err := r.app.GroupBroadcast(ctx, &quot;chat&quot;, &quot;room&quot;, &quot;onMessage&quot;, msg)
+    if err != nil {
+        fmt.Println(&quot;error broadcasting message&quot;, err)
+    }
+}
+
+var app pitaya.Pitaya
+
+func main() {
+    conf := config.NewDefaultPitayaConfig()
+    conf.Buffer.Handler.LocalProcess = 15
+    conf.Heartbeat.Interval = time.Duration(15 * time.Second)
+    conf.Buffer.Agent.Messages = 32
+    conf.Handler.Messages.Compression = false
+    // Standalone 独立模式
+    builder := pitaya.NewDefaultBuilder(true, &quot;chat&quot;, pitaya.Standalone, map[string]string{}, *conf)
+    // Cluster 集群模式 需要 etcd, nats, 看情况还有可能需要开启redis
+    //builder := pitaya.NewDefaultBuilder(true, &quot;chat&quot;, pitaya.Cluster, map[string]string{}, *conf)
+    builder.AddAcceptor(acceptor.NewTCPAcceptor(&quot;:3251&quot;))
+    builder.Groups = groups.NewMemoryGroupService(builder.Config.Groups.Memory)
+    app = builder.Build()
+
+    defer app.Shutdown()
+
+    err := app.GroupCreate(context.Background(), &quot;room&quot;)
+    if err != nil {
+        panic(err)
+    }
+
+    // rewrite component and handler name
+    room := NewRoom(app)
+    app.Register(room,
+        component.WithName(&quot;room&quot;),
+        component.WithNameFunc(strings.ToLower),
+    )
+
+    app.Start()
+}
+
+</code></pre>
+<p><strong>客户端部分就是</strong>
+- 在 https://blog.csdn.net/weixin_44627989/article/details/130355014 上的代码基础上进行的修改完成</p>
+<p>客户端的设计
+    Control         Control   main.gd
+        client      Node      client.gd</p>
+<pre><code>    txtContent  TextEdit
+    txtInput    TextEdit
+    txtNickName LineEdit
+
+    btnConnected Button
+    btnSend      Button
+
+    txtHost      LineEdit
+    txtPort      LineEdit
+</code></pre>
+<p>客户端代码设计3个脚本
+main.gd</p>
+<pre><code>extends Control
+
+@onready var client: Client = $client
+
+@onready var txt_port: LineEdit = $txtPort
+@onready var txt_host: LineEdit = $txtHost
+@onready var txt_input: TextEdit = $txtInput
+@onready var txt_nick_name: LineEdit = $txtNickName
+
+@onready var txt_content: TextEdit = $txtContent
+@onready var txt_rtlabel: RichTextLabel = $txtRTLabel
+
+@onready var btn_connected: Button = $btnConnected
+@onready var btn_send: Button = $btnSend
+
+
+func _ready() -&gt; void:
+    btn_send.disabled = true;
+    pass
+
+func _on_btn_connected_pressed() -&gt; void:
+    var host = txt_host.text;
+    var port = int(txt_port.text);
+
+    client.connect_server(host, port, _rev_connected, _rev_msg);
+    btn_connected.disabled = true;
+    var tween:Tween = create_tween();
+    tween.tween_interval(2);
+    tween.tween_callback(func():
+        if (!client.is_connected_server()):
+            btn_connected.disabled = false;
+        )
+
+    pass # Replace with function body.
+
+func _push_msg(uname:String, content:String)-&gt; void:
+    var tmp_str:String = uname + &quot;:&quot; + content + &quot;\n&quot;;
+    txt_content.insert_text_at_caret(tmp_str)
+    #txt_rtlabel.add_text(str);
+    pass
+
+#----------------------------------------------`
+func onNewUser(msg) -&gt; void:
+    var data = msg.jsonData();
+    _push_msg('system', data.content);
+    pass
+
+func onMembers(msg) -&gt; void:
+    var data = msg.jsonData();
+    _push_msg('system',  &quot;members: &quot; + JSON.stringify(data.members));
+    pass
+
+func onJoin(succ:bool, msg:Variant, rt:String) -&gt; void:
+    if (!succ):
+        print(&quot;err not get message rep:&quot;,msg, rt);
+        return;
+    var data = msg.jsonData();
+    if(data.code == 0):
+        _push_msg('system', data.result);
+        client.set_push_func('onMessage', onMessage);
+        #starx.on('onMessage', onMessage)
+    pass
+
+func onMessage(msg) -&gt; void:
+    var data = msg.jsonData();
+    _push_msg(data.name, data.content)
+    pass
+
+func _rev_connected(succ:bool) -&gt; void:
+    if (succ):
+        print(&quot;connect to server&quot;);
+        client.set_push_func(&quot;onNewUser&quot;, onNewUser);
+        client.set_push_func(&quot;onMembers&quot;, onMembers);
+
+        client.SendRequest(&quot;room.join&quot;, &quot;{}&quot;, onJoin);
+        btn_send.disabled = false;
+    else:
+        btn_send.disabled = true;
+        btn_connected.disabled = false;
+    pass
+
+func _rev_msg(msg) -&gt; void:
+    print(&quot;--msg---:&quot;,msg);
+    pass
+
+func _on_btn_send_pressed() -&gt; void:
+    if (!client.is_connected_server()):
+        print(&quot; not connected &quot;)
+        return;
+
+    var nn = txt_nick_name.text;
+    var ctt = txt_input.text;
+
+    var data = JSON.stringify({&quot;name&quot;: nn, &quot;content&quot;:ctt }).to_utf8_buffer();
+    client.SendNotify('room.message', data);
+    pass # Replace with function body.
+
+</code></pre>
+<p>StreamTCP.gd</p>
+<pre><code>extends Node
+class_name StreamTCP
+
+####
+## 从 复制下来进行的修改
+## https://www.bytesnsprites.com/posts/2021/creating-a-tcp-client-in-godot/
+###
+
+signal connected
+signal data
+signal disconnected
+signal error
+
+var _status: int = 0
+var _stream: StreamPeerTCP = StreamPeerTCP.new()
+
+func _ready() -&gt; void:
+    _status = _stream.get_status()
+
+func _process(_delta: float) -&gt; void:
+    var new_status: int = _stream.get_status()
+    if new_status != _status:
+        _status = new_status
+        match _status:
+            _stream.STATUS_NONE:
+                print(&quot;Disconnected from host.&quot;)
+                emit_signal(&quot;disconnected&quot;)
+            _stream.STATUS_CONNECTING:
+                print(&quot;Connecting to host.&quot;)
+            _stream.STATUS_CONNECTED:
+                print(&quot;Connected to host.&quot;)
+                emit_signal(&quot;connected&quot;)
+            _stream.STATUS_ERROR:
+                print(&quot;Error with socket stream.&quot;)
+                emit_signal(&quot;error&quot;)
+
+    if _status == _stream.STATUS_CONNECTED:
+        var available_bytes: int = _stream.get_available_bytes()
+        if available_bytes &gt; 0:
+            #print(&quot;available bytes: &quot;, available_bytes)
+            var buf_array: Array = _stream.get_partial_data(available_bytes)
+            # Check for read error.
+            if buf_array[0] != OK:
+                print(&quot;Error getting data from stream: &quot;, buf_array[0])
+                emit_signal(&quot;error&quot;)
+            else:
+                emit_signal(&quot;data&quot;, buf_array[1])
+
+func is_connected_server() -&gt; bool:
+    var state:int = _stream.get_status();
+    return state == _stream.STATUS_CONNECTED;
+
+func connect_to_host(host: String, port: int) -&gt; void:
+    print(&quot;Connecting to %s:%d&quot; % [host, port])
+    # Reset status so we can tell if it changes to error again.
+    _status = _stream.STATUS_NONE
+    if _stream.connect_to_host(host, port) != OK:
+        print(&quot;Error connecting to host.&quot;)
+        emit_signal(&quot;error&quot;)
+    else:
+        #_stream.set_no_delay(true)
+        _stream.poll();
+
+func disconnect_from_host() -&gt; void:
+    if (is_connected_server()):
+        _stream.disconnect_from_host();
+
+func send(buff: PackedByteArray) -&gt; bool:
+    if _status != _stream.STATUS_CONNECTED:
+        print(&quot;Error: Stream is not currently connected.&quot;)
+        return false
+    var err: int = _stream.put_data(buff)
+    if err != OK:
+        print(&quot;Error writing to stream: &quot;, err)
+        return false
+    return true
+
+</code></pre>
+<p>client.gd</p>
+<pre><code>extends Node
+class_name  Client
+
+
+
+ #/**
+   #* Package protocol encode.
+   #*
+   #* Pomelo package format:
+   #* +------+-------------+------------------+
+   #* | type | body length |       body       |
+   #* +------+-------------+------------------+
+   #*
+   #* Head: 4bytes
+   #*   0: package type,
+   #*      1 - handshake,
+   #*      2 - handshake ack,
+   #*      3 - heartbeat,
+   #*      4 - data
+   #*      5 - kick
+   #*   1 - 3: big-endian body length
+   #* Body: body length bytes
+   #*
+   #* @param  {Number}    type   package type
+   #* @param  {ByteArray} body   body content in bytes
+   #* @return {ByteArray}        new byte array that contains encode result
+   #*/
+
+# 5种 基本类型消息
+
+const PACK_TYPE_HANDSHAKE:int = 0x01
+const PACK_TYPE_HANDSHAKEACK:int = 0x02
+const PACK_TYPE_HEARTBEAT:int = 0x03
+const PACK_TYPE_DATA:int = 0x04
+const PACK_TYPE_KICK:int = 0x05
+
+const MSG_TYPE_REQUEST:int = 0x00
+const MSG_TYPE_NOTIFY:int = 0x01
+const MSG_TYPE_RESPONSE:int = 0x02
+const MSG_TYPE_PUSH:int = 0x03
+
+const MSG_MASK_ERROR:int = 0x20
+const MSG_MASK_GZIP:int = 0x10
+const MSG_MASK_MSGROUTECOMPRESS:int = 0x01
+const MSG_MASK_MSGTYPE:int = 0x07
+const MSG_MASK_SGROUTELENGTH:int = 0xFF
+const MSG_MASK_MSGHEADLENGTH:int = 0x02
+
+const HeadLength:int    = 4
+const MaxPacketSize:int = 1 &lt;&lt; 24 #16MB
+
+var _wait_cb_array = {}
+var lastMsgId = 0
+var clientHandshakeData = null
+var packet_encoder:PomeloPacketEncoder = null
+var packet_decoder:PomeloPacketDecoder = null
+var message_encoder:MessagesEncoder = null
+var compression:Compression = null
+var heartbeatTimeout = -1
+var requestTimeout = 5
+var serializerType = &quot;json&quot;;
+
+var push_func = {}
+
+var _is_handshake = false;
+var _is_client_connected = false
+
+const RECONNECT_TIMEOUT: float = 3.0
+
+var _host:String = &quot;127.0.0.1&quot;
+var _port:int = 40000;
+#--------------------------------------------------------------
+#--------------------------------------------------------
+# 附加回调
+var _cb_connected_func = null;
+var _cb_msg_func = null;
+var heartbeatTimer:Timer = null;
+
+func is_handshaked() -&gt; bool:
+    return _is_handshake;
+
+func is_connected_server() -&gt; bool:
+    return _is_client_connected;
+
+func set_push_func(key:String, cb:Callable) -&gt; void:
+    push_func[key] = cb;
+
+func del_push_func(key) -&gt; bool:
+    if (push_func.has(key)):
+        push_func.erase(key);
+        return true;
+    return false;
+
+func connect_server(host:String, port:int, cbconnected:Callable, cbmsg:Callable):
+    _cb_connected_func = cbconnected;
+    _cb_msg_func = cbmsg;
+    _host = host;
+    _port = port;
+    _stream.connect_to_host(_host, _port);
+
+#--------------------------------------------------------------
+#--------------------------------------------------------------
+var _stream: StreamTCP = StreamTCP.new()
+
+func _ready() -&gt; void:
+    print(&quot;connect ready&quot;)
+    compression = Compression.new()
+    packet_encoder = PomeloPacketEncoder.new()
+    packet_decoder = PomeloPacketDecoder.new()
+    message_encoder = MessagesEncoder.new()
+    message_encoder.compression = compression
+
+    heartbeatTimer = Timer.new();
+    heartbeatTimer.one_shot = false;
+    heartbeatTimer.autostart = false;
+    heartbeatTimer.timeout.connect(_handle_Heartbeats_send);
+    add_child(heartbeatTimer);
+
+    _stream.connect(&quot;connected&quot;, _handle_client_connected)
+    _stream.connect(&quot;disconnected&quot;, _handle_client_disconnected)
+    _stream.connect(&quot;error&quot;, _handle_client_error)
+    _stream.connect(&quot;data&quot;, _handle_client_data)
+    add_child(_stream)
+
+func _connect_after_timeout(timeout: float) -&gt; void:
+    await get_tree().create_timer(timeout).timeout # Delay for timeout
+    _stream.connect_to_host(_host, _port)
+
+func _handle_client_connected() -&gt; void:
+    print(&quot;Client connected to server.&quot;)
+    _send_handshake();
+
+func _handle_client_data(buf: PackedByteArray) -&gt; void:
+    #print(&quot;rev data len:&quot;,len(buf));
+    _try_read_packs(buf);
+
+func _handle_client_disconnected() -&gt; void:
+    print(&quot;Client disconnected from server.&quot;)
+    _done_client_disconcted();
+    #_connect_after_timeout(RECONNECT_TIMEOUT) # Try to reconnect after 3 seconds
+
+func _handle_client_error() -&gt; void:
+    print(&quot;Client error.&quot;)
+    _done_client_disconcted();
+    #_connect_after_timeout(RECONNECT_TIMEOUT) # Try to reconnect after 3 seconds
+
+func _send_handshake() -&gt; void:
+    var hand_shake_data = {&quot;sys&quot;:{&quot;clientVersion&quot;:&quot;1.0&quot;, &quot;clientBuildNumber&quot;:&quot;999&quot;,&quot;platform&quot;:&quot;pc&quot;}};
+    var datstr = JSON.stringify(hand_shake_data)
+    var p = packet_encoder.Encode(PACK_TYPE_HANDSHAKE, datstr.to_utf8_buffer())
+    if p == null:
+        print(&quot;net connect fail&quot;)
+        return
+
+    _stream.send(p)
+
+func _try_read_packs(buf:PackedByteArray) -&gt; void:
+    var packets = packet_decoder.Decode(buf)
+    if packets == null:
+        print(&quot;net read fail len:&quot; + str(len(buf)))
+        return;
+
+    if (!is_handshaked()):
+        var handshakePacket:Packet = packets[0]
+        if (handshakePacket.Type != PACK_TYPE_HANDSHAKE):
+            print(&quot;------ get something:&quot;, handshakePacket.Type);
+            return;
+
+        print(&quot;get handshake type:&quot;, handshakePacket.Type)
+        if compression.IsCompressed(handshakePacket.Data):
+            handshakePacket.Data = compression.InflateData(handshakePacket.Data)
+            if handshakePacket.Data == null:
+                print(&quot;comp err&quot;)
+                return
+        var handshake = handshakePacket.jsonData();
+        print(&quot;got handshake from sv, data: &quot;, handshake)
+        var routeDict = {}
+        if (handshake[&quot;sys&quot;]):
+            var sys = handshake[&quot;sys&quot;];
+            if (sys[&quot;dict&quot;]):
+                routeDict = sys[&quot;dict&quot;];
+            if (sys[&quot;heartbeat&quot;]):
+                heartbeatTimeout = sys[&quot;heartbeat&quot;];
+            if (sys[&quot;serializer&quot;]):
+                serializerType =  sys[&quot;serializer&quot;];
+
+        message_encoder.SetDictionary(routeDict)
+
+        var p = packet_encoder.Encode(PACK_TYPE_HANDSHAKEACK, PackedByteArray())
+        if p == null:
+            return
+
+        _stream.send(p)
+
+        _is_handshake = true;
+        _is_client_connected = true
+
+        heartbeatTimer.wait_time = heartbeatTimeout;
+        heartbeatTimer.start();
+
+        if (_cb_connected_func):
+            _cb_connected_func.call(true);
+
+        return;
+
+    print(&quot; rev pack num:&quot;,packets.size());
+    for p in packets:
+        _handle_packets(p)
+    pass
+#--------------------------------------------------------------
+
+func _newMsgID():
+    lastMsgId += 1
+    return lastMsgId
+
+#SendRequest sends a request to the server
+func SendRequest(route:String, data:String, cb):
+    var m = Message.new()
+    m.Type = MSG_TYPE_REQUEST
+    m.ID = _newMsgID()
+    m.Route = route
+    m.Data = data.to_utf8_buffer();
+    m.SendAt = int(Time.get_unix_time_from_system())
+    m.Callback = cb
+    var p = _buildPacket(m)
+    _wait_cb_array[m.ID] = m
+
+    print(&quot;--- SendRequest route:&quot;, route, &quot; msgid:&quot;, m.ID);
+    _stream.send(p)
+
+#SendNotify sends a notify to the server
+func SendNotify(route:String, data:PackedByteArray):
+    var m = Message.new()
+    m.Type = MSG_TYPE_NOTIFY
+    m.ID = _newMsgID()
+    m.Route = route
+    m.Data = data
+    m.SendAt = int(Time.get_unix_time_from_system())
+    var p = _buildPacket(m)
+    print(&quot;--- SendNotify route:&quot;, route, &quot; msgid:&quot;, m.ID);
+    _stream.send(p)
+
+func _buildPacket(msg:Message):
+    var encMsg = message_encoder.Encode(msg)
+    var p = packet_encoder.Encode(PACK_TYPE_DATA, encMsg)
+    return p
+
+func _handle_Heartbeats_send() -&gt; void:
+    var p = packet_encoder.Encode(PACK_TYPE_HEARTBEAT, PackedByteArray())
+    _stream.send(p)
+
+func _handle_packets(p):
+    if p.Type == PACK_TYPE_DATA:
+        #handle data
+        var m = message_encoder.Decode(p.Data)
+        _handle_rev_one_packet(m)
+    elif p.Type == PACK_TYPE_KICK:
+        _done_client_disconcted();
+        print(&quot;kick from server&quot;);
+    elif p.Type == PACK_TYPE_HEARTBEAT:
+        print(&quot;------ heartbeat----&quot;);
+        pass
+    else:
+        print(&quot;-- un oper pack:&quot;, p.Type);
+
+func _requestReaper() -&gt; void:
+    if (!is_connected_server()):
+        return;
+    for msgid in _wait_cb_array.keys():
+        var msg:Message = _wait_cb_array[msgid];
+        if (int(Time.get_unix_time_from_system()) - msg.SendAt &gt; requestTimeout):
+            _wait_cb_array.erase(msgid);
+            _handle_timeout_msg(msg);
+
+func _handle_rev_one_packet(m:Message):
+    if m.Type == MSG_TYPE_RESPONSE:
+        print(&quot;--- respones msgid:&quot;, m.ID, &quot; Route:&quot;, m.Route);
+        if m.ID in _wait_cb_array:
+            var cb_msg = _wait_cb_array[m.ID]
+            _wait_cb_array.erase(m.ID)
+            cb_msg.Callback.call(true, m, &quot;success&quot;)
+    else:
+        _handle_push_msg(m)
+
+func _handle_push_msg(msg:Message):
+    print(&quot; _handle_push_msg ...msg.Route :&quot;,msg.Route, &quot; type:&quot; , msg.Type)
+    var cb_func = push_func.get(msg.Route)
+    if cb_func:
+        cb_func.call(msg)
+    elif (_cb_msg_func):
+        _cb_msg_func.call(msg);
+
+func _handle_timeout_msg(msg:Message):
+    msg.Callback.call(false, msg, &quot; message request is time out&quot;)
+
+func _process(_delta: float) -&gt; void:
+    _requestReaper();
+
+func _done_client_disconcted() -&gt; void:
+    _is_handshake = false;
+    _is_client_connected = false
+    _stream.disconnect_from_host();
+    heartbeatTimer.stop();
+    if (_cb_connected_func):
+        _cb_connected_func.call(false);
+
+func _exit_tree():
+    _done_client_disconcted();
+
+#--------------------------------------------------------------
+# 可以在下面的位置好到对应的编码解码以及消息的对应处理
+# github.com/topfreegames/pitaya/v2@v2.11.21/conn
+#--------------------------------------------------------------
+class Message:
+    var Type:int = 0
+    var ID:int = 0
+    var Route:String = &quot;&quot;
+    var Data:PackedByteArray = PackedByteArray()
+    var compressed:bool = false
+    var Err:bool = false
+    var SendAt:int = 0
+    var Callback = null
+
+    func jsonData() -&gt; Variant:
+        return JSON.parse_string(Data.get_string_from_utf8());
+
+class Packet:
+    var Type:int = -1
+    var Length:int = -1
+    var Data:PackedByteArray = PackedByteArray()
+
+    func jsonData() -&gt; Variant:
+        return JSON.parse_string(Data.get_string_from_utf8());
+
+class PomeloPacketEncoder:
+#Encode create a packet.Packet from  the raw bytes slice and then encode to network bytes slice
+#Protocol refs: https://github.com/NetEase/pomelo/wiki/Communication-Protocol
+#
+# -&lt;type&gt;-|--------&lt;length&gt;--------|-&lt;data&gt;-
+# --------|------------------------|--------
+# 1 byte packet type, 3 bytes packet data length(big end), and data segment
+    ## return null or PackedByteArray
+    func Encode(typ:int, data:PackedByteArray):
+        if typ &lt; PACK_TYPE_HANDSHAKE || typ &gt; PACK_TYPE_KICK:
+            return null
+        if len(data) &gt; MaxPacketSize:
+            return null
+        var buf = PackedByteArray()
+        buf.append(typ)
+        buf.append_array(IntToBytes(len(data)))
+        buf.append_array(data)
+        return buf
+
+    func IntToBytes(n):
+        var buf = PackedByteArray()
+        buf.append((n &gt;&gt; 16) &amp; 0xFF)
+        buf.append((n &gt;&gt; 8) &amp; 0xFF)
+        buf.append(n &amp; 0xFF)
+        return buf
+
+class PomeloPacketDecoder:
+
+    func BytesToInt(b):
+        var result = 0
+        for bytev in b:
+            result = int(result&lt;&lt;8) + int(bytev)
+        return result
+
+    func ParseHeader(header):
+        if len(header) != HeadLength:
+            return null
+        var typ = header[0]
+        if typ &lt; PACK_TYPE_HANDSHAKE || typ &gt; PACK_TYPE_KICK:
+            print(&quot;err header nu&quot; + str(typ))
+            return null
+        var size = BytesToInt(header.slice(1))
+        if size &gt; MaxPacketSize:
+            print(&quot;err size&quot; + str(size))
+            return null
+        return [size, typ]
+
+    #Decode decode the network bytes slice to packet.Packet(s)
+    ## return null or [Packet]
+    func Decode(buf):
+        # check length
+        if len(buf) &lt; HeadLength:
+            print(&quot;err header 0 &quot;)
+            return null
+
+        # first time
+        var header = buf.slice(0, HeadLength)
+        buf = buf.slice(HeadLength) if len(buf) &gt; HeadLength else []
+        var info = ParseHeader(header)
+        if info == null:
+            print(&quot;err header 1 &quot; + str(len(header)))
+            return null
+        var size = info[0]
+        var typ = info[1] 
+        var packets = []
+        while size &lt;= len(buf):
+            var p = Packet.new()
+            p.Type = typ
+            p.Length = size
+            packets.append(p)
+            if size &gt; 0:
+                p.Data = buf.slice(0, size)
+                buf = buf.slice(size) if size &lt; len(buf) else []
+            if len(buf) &lt; HeadLength:
+                break
+            header = buf.slice(0, HeadLength)
+            buf = buf.slice(HeadLength) if HeadLength &lt; len(buf) else []
+            info = ParseHeader(header)
+            if info == null:
+                break 
+            size = info[0]
+            typ = info[1]
+        return packets
+
+class MessagesEncoder:
+    var DataCompression = false
+    var compression = null
+    var routes = {}#压缩字典
+    var codes = {}
+
+    func SetDictionary(dict):
+        if dict == null:
+            return null
+        #routesCodesMutex.Lock()
+        #defer routesCodesMutex.Unlock()
+
+        for route in dict:
+            var code = dict[route]
+            var r = route.replace(&quot; &quot;, &quot;&quot;)
+
+            #duplication check
+            if r in routes:
+                return -1
+            if code in codes:
+                return -2
+            #update map, using last value when key duplicated
+            routes[r] = code
+            codes[code] = r
+
+        return null
+
+    #GetDictionary gets the routes map which is used to compress route.
+    func GetDictionary() -&gt; Dictionary:
+        #routesCodesMutex.RLock()
+        #defer routesCodesMutex.RUnlock()
+        var dict = {}
+        for k in routes:
+            dict[k] = routes[k]
+        return dict
+
+    func routable(t) -&gt; bool:
+        return t == MSG_TYPE_REQUEST || t == MSG_TYPE_NOTIFY || t == MSG_TYPE_PUSH
+
+    func invalidType(t) -&gt; bool:
+        return t &lt; MSG_TYPE_REQUEST || t &gt; MSG_TYPE_PUSH
+
+    func Uint16(b) -&gt; int:
+        var b1 = b[1] &amp; 0xFFFF
+        var b2 = (b[0] &amp; 0xFFFF)&lt;&lt;8
+        return b1 | b2
+
+#// Encode marshals message to binary format. Different message types is corresponding to
+#// different message header, message types is identified by 2-4 bit of flag field. The
+#// relationship between message types and message header is presented as follows:
+#// ------------------------------------------
+#// |   type   |  flag  |       other        |
+#// |----------|--------|--------------------|
+#// | request  |----000-|&lt;message id&gt;|&lt;route&gt;|
+#// | notify   |----001-|&lt;route&gt;             |
+#// | response |----010-|&lt;message id&gt;        |
+#// | push     |----011-|&lt;route&gt;             |
+#// ------------------------------------------
+#// The figure above indicates that the bit does not affect the type of message.
+#// See ref: https://github.com/topfreegames/pitaya/v2/blob/master/docs/communication_protocol.md
+
+    func Encode(message:Message):
+        if invalidType(message.Type):
+            return null
+        var buf:PackedByteArray = PackedByteArray()
+        var flag = (message.Type &amp; 0xFF) &lt;&lt; 1
+
+        #routesCodesMutex.RLock()
+        var compressed = message.Route in routes
+        var code = routes.get(message.Route)
+
+        #routesCodesMutex.RUnlock()
+        if compressed:
+            flag |= MSG_MASK_MSGROUTECOMPRESS
+
+        if message.Err:
+            flag |= MSG_MASK_ERROR
+
+        buf.append(flag)
+
+        if message.Type == MSG_TYPE_REQUEST || message.Type == MSG_TYPE_RESPONSE:
+            var n:int = message.ID
+            #variant length encode
+            while true:
+                var b = (n % 128) &amp; 0xFF
+                n = int(n/128.0);
+                if n != 0:
+                    buf.append(b+128)
+                else:
+                    buf.append(b)
+                    break
+
+        if routable(message.Type):
+            if compressed:
+                buf.append((code&gt;&gt;8)&amp;0xFF)
+                buf.append(code&amp;0xFF)
+            else:
+                buf.append(len(message.Route)&amp;0xFF)
+                buf.append_array(message.Route.to_utf8_buffer())
+
+
+        if DataCompression:
+            var d = compression.DeflateData(message.Data)
+            if d == null:
+                return null
+
+            if len(d) &lt; len(message.Data):
+                message.Data = d
+                buf[0] |= MSG_MASK_GZIP
+
+        buf.append_array(message.Data)
+        return buf
+
+
+    # github.com/topfreegames/pitaya/v2@v2.11.21/conn
+    # Decode unmarshal the bytes slice to a message
+    # See ref: https://github.com/topfreegames/pitaya/v2/blob/master/docs/communication_protocol.md
+    func Decode(data) -&gt; Message:
+        if len(data) &lt; MSG_MASK_MSGHEADLENGTH:
+            return null
+        var m = Message.new()
+        var flag = data[0]
+        var offset = 1
+        m.Type = (0xFF &amp; (flag &gt;&gt; 1)) &amp; MSG_MASK_MSGTYPE
+
+        if invalidType(m.Type):
+            return null
+
+        if m.Type == MSG_TYPE_REQUEST || m.Type == MSG_TYPE_RESPONSE:
+            var id = 0
+            # little end byte order
+            # WARNING: must can be stored in 64 bits integer
+            # variant length encode
+            for i in range(offset, len(data)):
+                var b = data[i];
+                id += (b&amp;0x7F) &lt;&lt; int(7*(i-offset));
+                if b &lt; 128:
+                    offset = i + 1
+                    break
+
+            #var i = offset
+            #while i &lt; len(data):
+                #var b = data[i]
+                #id += (b&amp;0x7F) * int(pow(2, (7 *i)))
+                #if b &lt; 128:
+                    #offset = i + 1
+                    #break
+                #i += 1 
+
+            m.ID = id
+
+        m.Err = flag&amp;MSG_MASK_ERROR == MSG_MASK_ERROR
+
+        if routable(m.Type):
+            if flag&amp;MSG_MASK_MSGROUTECOMPRESS == 1:
+                m.compressed = true
+                var code = Uint16(data.slice(offset, offset + 2))
+                #routesCodesMutex.RLock()
+                var route = codes.get(code, null)
+                #routesCodesMutex.RUnlock()
+                if route == null:
+                    return null
+
+                m.Route = route
+                offset += 2
+            else:
+                m.compressed = false
+                var rl = data[offset]
+                offset += 1
+                var valb = data.slice(offset, offset + int(rl))
+                m.Route = valb.get_string_from_utf8()
+                offset += int(rl)
+
+
+        m.Data = data.slice(offset)
+        if flag&amp;MSG_MASK_GZIP == MSG_MASK_GZIP:
+            m.Data = compression.InflateData(m.Data)
+            if m.Data == null:
+                return null
+
+        return m
+
+class Compression:
+    func DeflateData(_data) -&gt; PackedByteArray:
+        var bb = PackedByteArray()
+        #未实现
+        return bb
+
+    func InflateData(_data) -&gt; PackedByteArray:
+        var bb = PackedByteArray()
+        #未实现
+        return bb
+
+    func IsCompressed(data) -&gt; bool:
+        return len(data) &gt; 2 &amp;&amp;(
+            # zlib
+            (data[0] == 0x78 &amp;&amp;
+            (data[1] == 0x9C ||
+            data[1] == 0x01 ||
+            data[1] == 0xDA ||
+            data[1] == 0x5E)) ||
+            #gzip
+            (data[0] == 0x1F &amp;&amp; data[1] == 0x8B))
+
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      holmes
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
