@@ -26,19 +26,21 @@
 
     /* 鼠标移动到选项上修改背景颜色 */
     li a:hover {
-        background-color: #555;
+        background-color: #8ebbf5;
         color: white;
     }
 
     li a.active {
-        background-color: #4CAF50;
+        background-color: #3faae7;
         color: white;
     }
+
     .draggable-head {
         width: 200px;
         height: 40px;
         background-color: #ebf1fa;
     }
+
     .draggable-window {
         position: absolute;
         top: 100px;
@@ -77,7 +79,7 @@
             </ul>
         </div>
         <object id="svgContainer" data="imgs/00_穴位图_多颜色.svg" type="image/svg+xml"></object>
-         
+
     </div>
 
     <script>
@@ -110,8 +112,18 @@
             var el = document.getElementById("mySelect");
             _tvalue = el.value;
         }
-        function onJLSelect(i) {
-            _tselectIdx = i;
+        function onJLSelect(j) {
+            _tselectIdx = j;
+
+            for (var i in KEY_JL) {
+                var el = document.getElementById("menuitem" + i);
+                if (i == j) {
+                    el.classList.toggle("active");
+                } else {
+                    el.classList.remove("active");
+                }
+            }
+
             updateJLOpacitySelect();
         }
         function initJLSelect() {
@@ -119,7 +131,7 @@
             var el = document.getElementById("selectMenu");
             var rs = '';
             for (var i in KEY_JL) {
-                rs += '<li><a href="#home" onclick="onJLSelect(' + i + ')">' + KEY_JL[i] + '</a></li>\n'
+                rs += '<li><a id="menuitem' + i + '" href="#home" onclick="onJLSelect(' + i + ')">' + KEY_JL[i] + '</a></li>\n'
             }
             el.innerHTML = rs;
         }
@@ -218,8 +230,8 @@
             }
         }
         dragElement(drag);
-        
-    
+
+
         //--------------------
     </script>
 </body>
