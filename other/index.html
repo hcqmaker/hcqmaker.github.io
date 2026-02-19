@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>动态创建SVG元素</title>
+</head>
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 200px;
+        background-color: #f1f1f1;
+    }
+
+    li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+
+    /* 鼠标移动到选项上修改背景颜色 */
+    li a:hover {
+        background-color: #555;
+        color: white;
+    }
+
+    li a.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+    .draggable-head {
+        width: 200px;
+        height: 40px;
+        background-color: #ebf1fa;
+    }
+    .draggable-window {
+        position: absolute;
+        top: 100px;
+        left: 100px;
+        width: 200px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        cursor: move;
+    }
+</style>
+
+<body>
+    <div id="svgParent">
+        <div id="draggable" class="draggable-window">
+            <p id="draggableheader" class="draggable-head ">浮动窗口</p>
+            <input type="range" min="0" max="100" value="50" step="5" id="slider">
+            <input type="number" min="1" max="8" step="1" value="5" required id="numberScale">
+            <br />
+            <br />
+            其他层透明度
+            <select id="mySelect" onchange="selectChange()">
+                <option value="1">100%</option>
+                <option value="0.5">50%</option>
+                <option value="0.3" selected>30%</option>
+                <option value="0.1">10%</option>
+            </select>
+            <br />
+            <br />
+            <ul id="selectMenu">
+                <!-- <li><a href="#home" onclick="">主页</a></li>
+                <li><a href="#news">新闻</a></li>
+                <li><a href="#contact">联系</a></li>
+                <li><a href="#about">关于</a></li> -->
+            </ul>
+        </div>
+        <object id="svgContainer" data="imgs/00_穴位图_多颜色.svg" type="image/svg+xml"></object>
+         
+    </div>
+
+    <script>
+        const KEY_JL = [
+            '手太阴肺经',
+            '手阳明大肠经',
+            '足阳明胃经',
+            '足太阴脾经',
+            '手少阴心经',
+            '手太阳小肠经',
+            '足太阳膀胱经',
+            '足少阴肾经',
+            '手厥阴心包经',
+            '手少阳三焦经',
+            '足少阳胆经',
+            '足厥阴肝经',
+            '任脉',
+            '督脉'
+        ];
+        var _jl_list = [];
+        var _tvalue = 1.0;
+        var _tselectIdx = 0;
+        var _svgDocument = null;
+        var _tscaleXY = 5.0;
+
+        var svgw = 1980;
+        var svgh = 1080;
+
+        function selectChange() {
+            var el = document.getElementById("mySelect");
+            _tvalue = el.value;
+        }
+        function onJLSelect(i) {
+            _tselectIdx = i;
+            updateJLOpacitySelect();
+        }
+        function initJLSelect() {
+            selectChange();
+            var el = document.getElementById("selectMenu");
+            var rs = '';
+            for (var i in KEY_JL) {
+                rs += '<li><a href="#home" onclick="onJLSelect(' + i + ')">' + KEY_JL[i] + '</a></li>\n'
+            }
+            el.innerHTML = rs;
+        }
+        function updateJLOpacitySelect() {
+            for (var i in _jl_list) {
+                var el = _jl_list[i];
+                var val = _tselectIdx == i ? 1.0 : _tvalue;
+                // el.fill({ opacity: val})
+                el.style.opacity = val;
+            }
+        }
+
+        const numberScale = document.getElementById('numberScale')
+        numberScale.onchange = function () {
+            _tscaleXY = numberScale.value;
+        }
+        _svgDocument = document.getElementById('svgContainer');
+        _svgDocument.onload = function () {
+            var doc = this.contentDocument;
+            _jl_list = [];
+            for (var i in KEY_JL) {
+                var el = doc.getElementById(KEY_JL[i]);
+                _jl_list.push(el);
+            }
+            initJLSelect();
+        }
+        //--------------------
+        // 滑块处理
+
+        const slider = document.getElementById('slider');
+        slider.oninput = function () {
+            var svgParent = document.getElementById("svgParent");
+            // 0, 50, 100, 0, 100, 300
+            var v = 1;
+            if (slider.value > 50) {
+                var r = slider.value - 50;
+                v = r * _tscaleXY / 50;
+            } else {
+                v = slider.value / 50;
+            }
+            _svgDocument.setAttribute("width", svgw * v);
+            _svgDocument.setAttribute("height", svgh * v);
+            svgParent.setAttribute("width", svgw * v);
+            svgParent.setAttribute("height", svgh * v);
+        };
+
+        //--------------------
+        // 自动滚动
+        const drag = document.getElementById('draggable');
+        window.onscroll = function () {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            drag.style.top = (50 + scrollTop) + "px";
+
+            var scrrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+            drag.style.left = (50 + scrrollLeft) + "px";
+        };
+        // 拖动窗口
+        function dragElement(elmnt) {
+            var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+            if (document.getElementById(elmnt.id + "header")) {
+                // 如果存在，标题就是您移动 DIV 的位置：
+                document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+            } else {
+                // 否则，从 DIV 内的任何位置移动 DIV：
+                elmnt.onmousedown = dragMouseDown;
+            }
+
+            function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // 获取启动时鼠标光标的位置：
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                // 每当光标移动时调用函数： 
+                document.onmousemove = elementDrag;
+            }
+
+            function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                // 计算新的光标位置：
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                // 设置元素的新位置：
+                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+            }
+
+            function closeDragElement() {
+                // 释放鼠标按钮时停止移动：
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        }
+        dragElement(drag);
+        
+    
+        //--------------------
+    </script>
+</body>
+
+</html>
