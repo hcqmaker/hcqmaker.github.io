@@ -52,12 +52,21 @@
         padding: 10px;
         cursor: move;
     }
+
+    .button {
+        background-color: #3faae7;
+        border: none;
+        color: white;
+        padding: 12px 20px;
+        text-align: center;
+        text-decoration: none;
+    }
 </style>
 
 <body>
     <div id="svgParent">
         <div id="draggable" class="draggable-window">
-            <p id="draggableheader" class="draggable-head ">浮动窗口</p>
+            <p id="draggableheader" class="draggable-head "><button id="btnOnOff" class="button">隐藏</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拖动区域</p>
             <input type="range" min="0" max="100" value="50" step="5" id="slider">
             <input type="number" min="1" max="8" step="1" value="5" required id="numberScale">
             <br />
@@ -142,6 +151,13 @@
                 // el.fill({ opacity: val})
                 el.style.opacity = val;
             }
+        }
+        const btnOnOff = document.getElementById("btnOnOff");
+        btnOnOff.onclick = function () {
+            var el = document.getElementById("selectMenu");
+            var ds = el.style.display;
+            btnOnOff.innerHTML = ds == 'none' ? "隐藏":"显示";
+            el.style.display = ds == 'none' ? 'block':'none';
         }
 
         const numberScale = document.getElementById('numberScale')
