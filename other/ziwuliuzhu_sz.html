@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>子午流注24小时时钟（增大1/3版）</title>
+    <title>子午流注 时钟</title>
     <style>
         body {
             display: flex;
@@ -193,10 +193,10 @@
                 mark.setAttribute("y2", y2);
 
                 if (hour % 2 === 0) {
-                    mark.setAttribute("stroke", "#333");
+                    mark.setAttribute("stroke", "#626262");
                     mark.setAttribute("stroke-width", 4); // 3×4/3=4
                 } else {
-                    mark.setAttribute("stroke", "#666");
+                    mark.setAttribute("stroke", "#72706F");
                     mark.setAttribute("stroke-width", 3); // 2×4/3≈3
                 }
                 hourMarkContainer.appendChild(mark);
@@ -220,6 +220,7 @@
                 num.setAttribute("dominant-baseline", "middle");
                 num.setAttribute("font-size", "24"); // 18×4/3=24
                 num.setAttribute("font-weight", "bold");
+                num.setAttribute("fill", "#4E4E4E");
                 num.textContent = hour24Labels[i];
                 numberContainer.appendChild(num);
 
@@ -236,7 +237,7 @@
                 textLine1.setAttribute("dominant-baseline", "middle");
                 textLine1.setAttribute("font-size", "19"); // 14×4/3≈19
                 textLine1.setAttribute("font-weight", "bold");
-                textLine1.setAttribute("fill", "#33333");
+                textLine1.setAttribute("fill", "#242424");
                 textLine1.textContent = `${ziwuPeriods[i].name}(${ziwuPeriods[i].zodiac})`;
 
                 const textLine2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -246,7 +247,7 @@
                 textLine2.setAttribute("dominant-baseline", "middle");
                 textLine2.setAttribute("font-size", "16"); // 12×4/3=16
                 textLine2.setAttribute("font-weight", "600");
-                textLine2.setAttribute("fill", "#555");
+                textLine2.setAttribute("fill", "#3075A4");
                 textLine2.textContent = ziwuPeriods[i].meridian;
 
                 const textLine3 = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -256,7 +257,7 @@
                 textLine3.setAttribute("dominant-baseline", "middle");
                 textLine3.setAttribute("font-size", "16"); // 12×4/3=16
                 textLine3.setAttribute("font-weight", "600");
-                textLine3.setAttribute("fill", "#555");
+                textLine3.setAttribute("fill", "#219DEF");
                 textLine3.textContent = `${ziwuPeriods[i].organ}经`;
 
                 textGroup.appendChild(textLine1);

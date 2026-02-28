@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>动态创建SVG元素</title>
+    <title>十二经络穴位图</title>
 </head>
 <style>
     ul {
@@ -15,6 +15,7 @@
         padding: 0;
         width: 200px;
         background-color: #f1f1f1;
+        border-radius: 10px;
     }
 
     li a {
@@ -22,20 +23,24 @@
         color: #000;
         padding: 8px 16px;
         text-decoration: none;
+        border-radius: 10px;
     }
 
     /* 鼠标移动到选项上修改背景颜色 */
     li a:hover {
         background-color: #8ebbf5;
         color: white;
+        border-radius: 10px;
     }
 
     li a.active {
         background-color: #3faae7;
         color: white;
+        border-radius: 10px;
     }
 
     .draggable-head {
+        border-radius: 10px;
         width: 200px;
         height: 40px;
         background-color: #ebf1fa;
@@ -43,6 +48,7 @@
 
     .draggable-window {
         position: absolute;
+        border-radius: 8px;
         top: 100px;
         left: 100px;
         width: 200px;
@@ -53,8 +59,13 @@
         cursor: move;
     }
 
+    .draggable-menu {
+        border-radius: 10px;
+    }
+
     .button {
         background-color: #3faae7;
+        border-radius: 10px;
         border: none;
         color: white;
         padding: 12px 20px;
@@ -66,7 +77,8 @@
 <body>
     <div id="svgParent">
         <div id="draggable" class="draggable-window">
-            <p id="draggableheader" class="draggable-head "><button id="btnOnOff" class="button">隐藏</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拖动区域</p>
+            <p id="draggableheader" class="draggable-head "><button id="btnOnOff"
+                    class="button">隐藏</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;拖动区域</p>
             <input type="range" min="0" max="100" value="50" step="5" id="slider">
             <input type="number" min="1" max="8" step="1" value="5" required id="numberScale">
             <br />
@@ -80,7 +92,7 @@
             </select>
             <br />
             <br />
-            <ul id="selectMenu">
+            <ul id="selectMenu" class="draggable-menu">
                 <!-- <li><a href="#home" onclick="">主页</a></li>
                 <li><a href="#news">新闻</a></li>
                 <li><a href="#contact">联系</a></li>
@@ -156,8 +168,8 @@
         btnOnOff.onclick = function () {
             var el = document.getElementById("selectMenu");
             var ds = el.style.display;
-            btnOnOff.innerHTML = ds == 'none' ? "隐藏":"显示";
-            el.style.display = ds == 'none' ? 'block':'none';
+            btnOnOff.innerHTML = ds == 'none' ? "隐藏" : "显示";
+            el.style.display = ds == 'none' ? 'block' : 'none';
         }
 
         const numberScale = document.getElementById('numberScale')
