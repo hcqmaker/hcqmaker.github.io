@@ -1,0 +1,37 @@
+/* 1. 全局取消侧边栏项的默认选中样式 */
+.md-nav__link--active,
+.md-nav__link[data-md-state="active"] {
+    color: var(--md-default-fg-color) !important;
+    /* 恢复默认文字色 */
+    font-weight: normal !important;
+    /* 取消加粗 */
+    background-color: transparent !important;
+    /* 取消背景色 */
+}
+
+/* 2. 仅当手动点击（真正匹配路径）时，才显示选中样式 */
+.md-nav__link--active[href$="current-page.html"],
+/* 替换为实际页面路径 */
+.md-nav__link[data-md-state="active"][href^="/prg/"] {
+    color: var(--md-accent-fg-color) !important;
+    /* 强调色高亮 */
+    font-weight: 500 !important;
+    /* 轻微加粗 */
+}
+
+/* 3. 确保侧边栏展开状态的样式（无折叠箭头） */
+.md-nav__toggle {
+    display: none !important;
+    /* 隐藏折叠/展开箭头，保持展开 */
+}
+
+.md-nav__list {
+    display: block !important;
+    /* 强制显示所有子项 */
+}
+
+/* 4. 移除侧边栏第一项的特殊样式（避免视觉焦点） */
+.md-nav__item:first-child {
+    border: none !important;
+    padding: 0 !important;
+}

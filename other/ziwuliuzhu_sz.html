@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>子午流注24小时时钟（增大1/3版）</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #f5f5f5;
+            font-family: "Microsoft Yahei", sans-serif;
+            margin: 0;
+            padding: 20px;
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        /* 容器尺寸：400px × 4/3 ≈ 533px（取整为530px，保证视觉舒适） */
+        #ziwu-clock {
+            width: 530px;
+            height: 530px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .time-info {
+            margin-top: 40px;
+            font-size: 21px;
+            /* 16px × 4/3 ≈ 21px */
+            text-align: center;
+            color: #333;
+            width: 100%;
+            max-width: 830px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            /* 同步容器宽度 */
+        }
+
+        .current-time {
+            /* font-size: 27px; */
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .current-period {
+            font-size: 27px;
+            /* 20px × 4/3 = 26.67px，取整27px */
+            font-weight: bold;
+            color: #d81e06;
+            margin-top: 10px;
+            /* 8px × 4/3 ≈ 10px */
+            white-space: nowrap;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SVG viewBox：500px × 4/3 ≈ 667px（取整为670px，保证圆心为335,335） -->
+    <svg id="ziwu-clock" viewBox="0 0 700 700">
+        <!-- 基础圆形：圆心335,335（670/2），半径240（180 × 4/3） -->
+        <circle cx="350" cy="350" r="240" fill="#fff" stroke="#333" stroke-width="3" /> <!-- 线条宽度2×4/3≈3 -->
+        <g id="period-sectors"></g>
+        <g id="minute-marks"></g>
+        <g id="hour-marks-all"></g>
+        <g id="time-numbers"></g>
+        <g id="period-texts"></g>
+        <g id="clock-hands">
+            <!-- 调整指针长度：
+                 时针缩短：原173（到162）→ 缩短为120（到215）
+                 分针加长：原120（到215）→ 加长为180（到155）
+                 秒针加长：原107（到228）→ 加长为200（到135）
+                 圆心保持335,335不变
+            -->
+            <line id="hour-hand" x1="350" y1="350" x2="350" y2="230" stroke="#333" stroke-width="8"
+                stroke-linecap="round" />
+            <line id="minute-hand" x1="350" y1="350" x2="350" y2="180" stroke="#666" stroke-width="4"
+                stroke-linecap="round" />
+            <line id="second-hand" x1="350" y1="400" x2="350" y2="135" stroke="#d81e06" stroke-width="3"
+                stroke-linecap="round" />
+            <circle cx="350" cy="350" r="8" fill="#333" />
+        </g>
+    </svg>
+
+    <div class="time-info">
+        <div id="current-time" class="current-time">当前时间：--:--:--</div>
+        <div class="current-period" id="current-period">当前时辰：--</div>
+    </div>
+
+    <script>
+        const ziwuPeriods = [
+            { name: "子时", zodiac: "鼠", time: "23:00-01:00", organ: "胆", meridian: "足少阳", color: "#e3f2fd" },
+            { name: "丑时", zodiac: "牛", time: "01:00-03:00", organ: "肝", meridian: "足厥阴", color: "#e8f5e9" },
+            { name: "寅时", zodiac: "虎", time: "03:00-05:00", organ: "肺", meridian: "手太阴", color: "#fff8e1" },
+            { name: "卯时", zodiac: "兔", time: "05:00-07:00", organ: "大肠", meridian: "手阳明", color: "#fce4ec" },
+            { name: "辰时", zodiac: "龙", time: "07:00-09:00", organ: "胃", meridian: "足阳明", color: "#f3e5f5" },
+            { name: "巳时", zodiac: "蛇", time: "09:00-11:00", organ: "脾", meridian: "足太阴", color: "#e0f7fa" },
+            { name: "午时", zodiac: "马", time: "11:00-13:00", organ: "心", meridian: "手少阴", color: "#ffebee" },
+            { name: "未时", zodiac: "羊", time: "13:00-15:00", organ: "小肠", meridian: "手太阳", color: "#fff3e0" },
+            { name: "申时", zodiac: "猴", time: "15:00-17:00", organ: "膀胱", meridian: "足太阳", color: "#e8eaf6" },
+            { name: "酉时", zodiac: "鸡", time: "17:00-19:00", organ: "肾", meridian: "足少阴", color: "#f1f8e9" },
+            { name: "戌时", zodiac: "狗", time: "19:00-21:00", organ: "心包", meridian: "手厥阴", color: "#faf0f5" },
+            { name: "亥时", zodiac: "猪", time: "21:00-23:00", organ: "三焦", meridian: "手少阳", color: "#f5f5f5" }
+        ];
+
+        const hour24Labels = [24, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22];
+
+        const main_xy = 350
+
+        // 获取DOM元素
+        const sectorContainer = document.getElementById('period-sectors');
+        const minuteMarkContainer = document.getElementById('minute-marks');
+        const hourMarkContainer = document.getElementById('hour-marks-all');
+        const numberContainer = document.getElementById('time-numbers');
+        const textContainer = document.getElementById('period-texts');
+        const hourHand = document.getElementById('hour-hand');
+        const minuteHand = document.getElementById('minute-hand');
+        const secondHand = document.getElementById('second-hand');
+        const currentTimeEl = document.getElementById('current-time');
+        const currentPeriodEl = document.getElementById('current-period');
+
+        function initClock() {
+            // 1. 绘制时辰扇形区域（半径240，圆心335,335）
+            ziwuPeriods.forEach((p, i) => {
+                const startAngle = (i * 30 - 15) - 90;
+                const endAngle = (i * 30 + 15) - 90;
+                const sr = startAngle * Math.PI / 180;
+                const er = endAngle * Math.PI / 180;
+                const r = 240; // 180 × 4/3 = 240
+                const sx = main_xy + r * Math.cos(sr);
+                const sy = main_xy + r * Math.sin(sr);
+                const ex = main_xy + r * Math.cos(er);
+                const ey = main_xy + r * Math.sin(er);
+                const large = endAngle - startAngle > 180 ? 1 : 0;
+                const d = `M 350 350 L ${sx} ${sy} A ${r} ${r} 0 ${large} 1 ${ex} ${ey} Z`;
+                const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                path.id = `sector-${i}`;
+                path.setAttribute("d", d);
+                path.setAttribute("fill", p.color);
+                path.setAttribute("fill-opacity", 1);
+                path.setAttribute("stroke", "#ccc");
+                path.setAttribute("stroke-width", 1.3); // 1×4/3≈1.3
+                sectorContainer.appendChild(path);
+            });
+
+            // 2. 绘制分钟刻度（按比例增大位置）
+            const minutesPerHourMark = 4;
+            const totalMinuteMarks = 24 * minutesPerHourMark;
+            const angleStep = 360 / totalMinuteMarks;
+
+            for (let i = 0; i < totalMinuteMarks; i++) {
+                if (i % minutesPerHourMark === 0) continue;
+
+                const angle = i * angleStep - 90;
+                const rad = angle * Math.PI / 180;
+                // 刻度位置：170×4/3≈227，180×4/3=240
+                const x1 = main_xy + 227 * Math.cos(rad);
+                const y1 = main_xy + 227 * Math.sin(rad);
+                const x2 = main_xy + 240 * Math.cos(rad);
+                const y2 = main_xy + 240 * Math.sin(rad);
+
+                const mark = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                mark.setAttribute("x1", x1);
+                mark.setAttribute("y1", y1);
+                mark.setAttribute("x2", x2);
+                mark.setAttribute("y2", y2);
+                mark.setAttribute("stroke", "#999");
+                mark.setAttribute("stroke-width", 1.3); // 1×4/3≈1.3
+                minuteMarkContainer.appendChild(mark);
+            }
+
+            // 3. 绘制24小时时钟刻度（按比例增大位置）
+            for (let hour = 0; hour < 24; hour++) {
+                const angle = hour * 15 - 90;
+                const rad = angle * Math.PI / 180;
+                // 刻度位置：160×4/3≈213，180×4/3=240
+                const x1 = main_xy + 213 * Math.cos(rad);
+                const y1 = main_xy + 213 * Math.sin(rad);
+                const x2 = main_xy + 240 * Math.cos(rad);
+                const y2 = main_xy + 240 * Math.sin(rad);
+
+                const mark = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                mark.setAttribute("x1", x1);
+                mark.setAttribute("y1", y1);
+                mark.setAttribute("x2", x2);
+                mark.setAttribute("y2", y2);
+
+                if (hour % 2 === 0) {
+                    mark.setAttribute("stroke", "#333");
+                    mark.setAttribute("stroke-width", 4); // 3×4/3=4
+                } else {
+                    mark.setAttribute("stroke", "#666");
+                    mark.setAttribute("stroke-width", 3); // 2×4/3≈3
+                }
+                hourMarkContainer.appendChild(mark);
+            }
+
+            const ax = 0;
+            const ay = 0;
+            const zi_r = 290;      // 文字的位置半径
+            const num_r = 195;
+            // 4. 绘制12个主刻度数字和时辰文字（按比例增大）
+            for (let i = 0; i < 12; i++) {
+                const angle = i * 30 - 90;
+                const rad = angle * Math.PI / 180;
+                // 数字位置：150×4/3=200
+                const nx = main_xy + num_r * Math.cos(rad);
+                const ny = main_xy + num_r * Math.sin(rad);
+                const num = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                num.setAttribute("x", nx);
+                num.setAttribute("y", ny);
+                num.setAttribute("text-anchor", "middle");
+                num.setAttribute("dominant-baseline", "middle");
+                num.setAttribute("font-size", "24"); // 18×4/3=24
+                num.setAttribute("font-weight", "bold");
+                num.textContent = hour24Labels[i];
+                numberContainer.appendChild(num);
+
+                // 外围文字位置：210×4/3=280
+                const tx = main_xy + zi_r * Math.cos(rad);
+                const ty = main_xy + zi_r * Math.sin(rad);
+                const textGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+                textGroup.setAttribute("transform", `translate(${tx}, ${ty})`);
+
+                const textLine1 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                textLine1.setAttribute("x", 0 + ax);
+                textLine1.setAttribute("y", -20 + ay); // 15×4/3=20
+                textLine1.setAttribute("text-anchor", "middle");
+                textLine1.setAttribute("dominant-baseline", "middle");
+                textLine1.setAttribute("font-size", "19"); // 14×4/3≈19
+                textLine1.setAttribute("font-weight", "bold");
+                textLine1.setAttribute("fill", "#33333");
+                textLine1.textContent = `${ziwuPeriods[i].name}(${ziwuPeriods[i].zodiac})`;
+
+                const textLine2 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                textLine2.setAttribute("x", 0 + ax);
+                textLine2.setAttribute("y", 0 + ay);
+                textLine2.setAttribute("text-anchor", "middle");
+                textLine2.setAttribute("dominant-baseline", "middle");
+                textLine2.setAttribute("font-size", "16"); // 12×4/3=16
+                textLine2.setAttribute("font-weight", "600");
+                textLine2.setAttribute("fill", "#555");
+                textLine2.textContent = ziwuPeriods[i].meridian;
+
+                const textLine3 = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                textLine3.setAttribute("x", 0 + ax);
+                textLine3.setAttribute("y", 20 + ay); // 15×4/3=20
+                textLine3.setAttribute("text-anchor", "middle");
+                textLine3.setAttribute("dominant-baseline", "middle");
+                textLine3.setAttribute("font-size", "16"); // 12×4/3=16
+                textLine3.setAttribute("font-weight", "600");
+                textLine3.setAttribute("fill", "#555");
+                textLine3.textContent = `${ziwuPeriods[i].organ}经`;
+
+                textGroup.appendChild(textLine1);
+                textGroup.appendChild(textLine2);
+                textGroup.appendChild(textLine3);
+                textContainer.appendChild(textGroup);
+            }
+
+            // 启动时钟
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours();
+            const m = now.getMinutes();
+            const s = now.getSeconds();
+
+            // 计算指针角度
+            const ha = h * 15 + m * 0.25;
+            const ma = m * 6;
+            const sa = s * 6;
+
+            // 指针旋转中心改为335,335
+            hourHand.setAttribute('transform', `rotate(${ha} 350 350)`);
+            minuteHand.setAttribute('transform', `rotate(${ma} 350 350)`);
+            secondHand.setAttribute('transform', `rotate(${sa} 350 350)`);
+
+            // 显示当前时间（24小时制）
+            const displayHour = h === 0 ? 24 : h;
+            currentTimeEl.textContent =
+                `当前时间：${String(displayHour).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+
+            // 显示当前时辰
+            const cp = getCurrentPeriod(h, m);
+            currentPeriodEl.textContent = `当前时辰：${cp.name}(${cp.zodiac}) ${cp.time} (${cp.meridian}·${cp.organ}经)`;
+        }
+
+        // 匹配当前子午流注时辰
+        function getCurrentPeriod(hour, minute) {
+            const total = hour * 60 + minute;
+            const starts = [23 * 60, 1 * 60, 3 * 60, 5 * 60, 7 * 60, 9 * 60, 11 * 60, 13 * 60, 15 * 60, 17 * 60, 19 * 60, 21 * 60];
+            for (let i = 0; i < 12; i++) {
+                const j = (i + 1) % 12;
+                const s = starts[i];
+                const e = j === 0 ? 24 * 60 : starts[j];
+                if ((total >= s && total < e) || (i === 11 && total >= s)) {
+                    return { ...ziwuPeriods[i], index: i };
+                }
+            }
+            return { ...ziwuPeriods[0], index: 0 };
+        }
+
+        // 页面加载完成后初始化时钟
+        window.addEventListener('DOMContentLoaded', initClock);
+    </script>
+</body>
+
+</html>
